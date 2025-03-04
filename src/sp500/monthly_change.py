@@ -12,7 +12,9 @@ def download_to_csv_monthly():
     # 按月重采样并计算变化率
     monthly_close = sp500["Close"].resample("ME").last()
     monthly_close["^GSPC"] = monthly_close["^GSPC"].round(2)
-    monthly_close["Rate"] = (monthly_close.pct_change().dropna() * 100).round(2)
+    monthly_close["Rate"] = (
+        monthly_close.pct_change(fill_method=None).dropna() * 100
+    ).round(2)
 
     monthly_close.to_csv("sp500_monthly_change.csv")
 
@@ -26,7 +28,9 @@ def download_to_csv_weekly():
     # 按月重采样并计算变化率
     monthly_close = sp500["Close"].resample("W").last()
     monthly_close["^GSPC"] = monthly_close["^GSPC"].round(2)
-    monthly_close["Rate"] = (monthly_close.pct_change().dropna() * 100).round(2)
+    monthly_close["Rate"] = (
+        monthly_close.pct_change(fill_method=None).dropna() * 100
+    ).round(2)
 
     monthly_close.to_csv("sp500_weekly_change.csv")
 
