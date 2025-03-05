@@ -8,7 +8,7 @@ import yfinance as yf
 CSV_DIR = "data/csv"
 
 
-def download_to_csv_monthly():
+def download_to_csv():
     """下载恒生指数数据并统计"""
     # 下载恒生指数数据
     hsi = yf.download("^HSI", auto_adjust=True)
@@ -16,25 +16,23 @@ def download_to_csv_monthly():
     # 按月重采样并计算变化率
     monthly_close = hsi["Close"].resample("ME").last()
     monthly_close["^HSI"] = monthly_close["^HSI"].round(2)
-    monthly_close["Rate"] = (monthly_close.pct_change().dropna() * 100).round(2)
+    monthly_close["Rate"] = (
+        monthly_close.pct_change(fill_method=None).dropna() * 100
+    ).round(2)
 
-    # 保存到统一目录
-    os.makedirs(CSV_DIR, exist_ok=True)
+    # 保存到CSV文件
+    if not os.path.exists(CSV_DIR):
+        os.makedirs(CSV_DIR)
     monthly_close.to_csv(os.path.join(CSV_DIR, "hsi_monthly_change.csv"))
-
-
-def download_to_csv_weekly():
-    """下载恒生指数数据并统计"""
-    # 下载恒生指数数据
-    hsi = yf.download("^HSI", auto_adjust=True)
 
     # 按周重采样并计算变化率
     weekly_close = hsi["Close"].resample("W").last()
     weekly_close["^HSI"] = weekly_close["^HSI"].round(2)
-    weekly_close["Rate"] = (weekly_close.pct_change().dropna() * 100).round(2)
+    weekly_close["Rate"] = (
+        weekly_close.pct_change(fill_method=None).dropna() * 100
+    ).round(2)
 
-    # 保存到统一目录
-    os.makedirs(CSV_DIR, exist_ok=True)
+    # 保存到CSV文件
     weekly_close.to_csv(os.path.join(CSV_DIR, "hsi_weekly_change.csv"))
 
 
@@ -79,7 +77,6 @@ def matplotlib_show(df: pandas.DataFrame):
 
 
 if __name__ == "__main__":
-    download_to_csv_monthly()
-    download_to_csv_weekly()
-    matplotlib_show(pandas.read_csv(os.path.join(CSV_DIR, "hsi_weekly_change.csv")))
+    download_to_csv()
     matplotlib_show(pandas.read_csv(os.path.join(CSV_DIR, "hsi_monthly_change.csv")))
+    matplotlib_show(pandas.read_csv(os.path.join(CSV_DIR, "hsi_weekly_change.csv")))
