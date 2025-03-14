@@ -21,7 +21,7 @@ def matplotlib_show(df: pandas.DataFrame, index_name: str):
     # 创建共享x轴的第二个y轴
     ax2 = ax1.twinx()
     colors = df["Rate"].apply(lambda x: "green" if x > 0 else "red")
-    ax2.bar(df["Date"], df["Rate"], label="变化率", color=colors, alpha=0.6, width=10)
+    ax2.bar(df["Date"], df["Rate"], label="变化率", color=colors, alpha=0.6, width=8)
     ax2.set_ylabel("变化率 (%)", color="red")
     ax2.tick_params(axis="y", labelcolor="red")
 
@@ -40,5 +40,4 @@ def matplotlib_show(df: pandas.DataFrame, index_name: str):
     # 自动调整子图参数, 使之填充整个图像区域
     plt.tight_layout()
 
-    plt.show()
     plt.show()
