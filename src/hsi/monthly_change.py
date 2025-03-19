@@ -45,9 +45,3 @@ if __name__ == "__main__":
     matplotlib_show(
         pandas.read_csv(os.path.join(CSV_DIR, "hsi_weekly_change.csv")), "恒生指数"
     )
-    matplotlib_show(
-        pandas.read_csv(os.path.join(CSV_DIR, "hsi_monthly_change.csv")), "恒生指数"
-    )
-    matplotlib_show(
-        pandas.read_csv(os.path.join(CSV_DIR, "hsi_weekly_change.csv")), "恒生指数"
-    )

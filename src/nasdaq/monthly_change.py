@@ -47,11 +47,3 @@ if __name__ == "__main__":
         pandas.read_csv(os.path.join(CSV_DIR, "nasdaq_weekly_change.csv")),
         "纳斯达克指数",
     )
-    matplotlib_show(
-        pandas.read_csv(os.path.join(CSV_DIR, "nasdaq_monthly_change.csv")),
-        "纳斯达克指数",
-    )
-    matplotlib_show(
-        pandas.read_csv(os.path.join(CSV_DIR, "nasdaq_weekly_change.csv")),
-        "纳斯达克指数",
-    )
