@@ -44,4 +44,3 @@ def matplotlib_show(df: pandas.DataFrame, index_name: str):
     plt.tight_layout()
 
     plt.show()
-    plt.show()
