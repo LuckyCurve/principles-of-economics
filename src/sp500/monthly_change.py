@@ -39,7 +39,7 @@ def download_to_csv():
 
 if __name__ == "__main__":
     download_to_csv()
-    
+
     # 加载并展示月度数据
     monthly_df = pandas.read_csv(os.path.join(CSV_DIR, "sp500_monthly_change.csv"))
     print("\n标普500指数月度统计:")
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     print(f"最大涨幅: {monthly_df['Rate'].max():.2f}%")
     print(f"最大跌幅: {monthly_df['Rate'].min():.2f}%")
     matplotlib_show(monthly_df, "标普500指数", freq="monthly")
-    
+
     # 加载并展示周度数据
     weekly_df = pandas.read_csv(os.path.join(CSV_DIR, "sp500_weekly_change.csv"))
     print("\n标普500指数周度统计:")
