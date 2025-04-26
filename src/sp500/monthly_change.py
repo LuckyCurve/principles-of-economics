@@ -38,7 +38,7 @@ def download_to_csv():
 
 
 if __name__ == "__main__":
-    # download_to_csv()
+    download_to_csv()
 
     # 加载并展示月度数据
     monthly_df = pandas.read_csv(os.path.join(CSV_DIR, "sp500_monthly_change.csv"))
