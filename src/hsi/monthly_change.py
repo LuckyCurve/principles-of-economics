@@ -37,9 +37,9 @@ def download_to_csv():
     weekly_close.to_csv(os.path.join(CSV_DIR, "hsi_weekly_change.csv"))
 
 
-if __name__ == "__main__":
+def main():
     download_to_csv()
-    
+
     # 加载并展示月度数据
     monthly_df = pandas.read_csv(os.path.join(CSV_DIR, "hsi_monthly_change.csv"))
     print("\n恒生指数月度统计:")
@@ -47,7 +47,7 @@ if __name__ == "__main__":
     print(f"最大涨幅: {monthly_df['Rate'].max():.2f}%")
     print(f"最大跌幅: {monthly_df['Rate'].min():.2f}%")
     matplotlib_show(monthly_df, "恒生指数", freq="monthly")
-    
+
     # 加载并展示周度数据
     weekly_df = pandas.read_csv(os.path.join(CSV_DIR, "hsi_weekly_change.csv"))
     print("\n恒生指数周度统计:")
@@ -55,3 +55,7 @@ if __name__ == "__main__":
     print(f"最大涨幅: {weekly_df['Rate'].max():.2f}%")
     print(f"最大跌幅: {weekly_df['Rate'].min():.2f}%")
     matplotlib_show(weekly_df, "恒生指数", freq="weekly")
+
+
+if __name__ == "__main__":
+    main()
