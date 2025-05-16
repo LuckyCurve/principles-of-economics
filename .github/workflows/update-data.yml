@@ -2,7 +2,7 @@ name: Update Market Data Daily
 
 on:
   schedule:
-    - cron: "0 3 * * *" # UTC 3:00 (Beijing 11:00)
+    - cron: "0 3 * * 2-6" # UTC 3:00 (Beijing 11:00), only Tuesday to Saturday
   workflow_dispatch: # 允许手动触发
 
 jobs:

@@ -1,6 +1,8 @@
+import json
 import os
 
 import pandas
+from yfinance import Ticker
 
 # 统一的CSV文件目录
 CSV_DIR = "data/csv"
@@ -21,7 +23,4 @@ def sp500_calculate_earn_rate(month: int) -> float:
 
 
 if __name__ == "__main__":
-    for i in range(1, 121):
-        print(
-            f"res {i}: {round(sp500_calculate_earn_rate(i) * 100, 3)}% \t\t\t\t {round(nasdaq_calculate_earn_rate(i) * 100, 3)}%"
-        )
+    print(json.dumps(Ticker("GOOG").info).replace("\n", "\\n"))

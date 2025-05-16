@@ -20,7 +20,9 @@ def get_nasdaq100_tickers():
         table = soup.find("table", {"id": "constituents"})
         tickers = []
         for row in table.find_all("tr")[1:]:  # 跳过表头
-            ticker = row.find_all("td")[1].text.strip()  # 纳斯达克表格中股票代码在第二列
+            ticker = row.find_all("td")[
+                1
+            ].text.strip()  # 纳斯达克表格中股票代码在第二列
             # yfinance 有时需要将 . 替换为 - (例如 BRK.B -> BRK-B)
             ticker = ticker.replace(".", "-")
             tickers.append(ticker)
