@@ -27,7 +27,7 @@ repos:
       - id: typos
         name: typos spell checker
         entry: typos
-        language: system
+        language: rust
         pass_filenames: false
   # ⚡ Ruff - 快速静态分析 + 格式化 + import 排序
   - repo: https://github.com/astral-sh/ruff-pre-commit
