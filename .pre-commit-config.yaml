@@ -4,10 +4,24 @@ repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
+      # 移除行尾多余空格
       - id: trailing-whitespace
+      # 确保文件末尾只有一个换行符
       - id: end-of-file-fixer
+      # 校验 YAML 文件
       - id: check-yaml
+      # 校验 Json 文件
+      - id: check-json
+      # 校验是否存在大文件，默认 500 KB
       - id: check-added-large-files
+      # 检查文件名在大小写敏感的文件系统上是否冲突
+      - id: check-case-conflict
+      # 脚本是否以 # 开头
+      - id: "check-executables-have-shebangs"
+      # 是否有提交私钥
+      - id: "detect-private-key"
+      # 监测 test 文件命名
+      - id: "name-tests-test"
   - repo: local
     hooks:
       - id: typos
@@ -15,3 +29,8 @@ repos:
         entry: typos
         language: system
         pass_filenames: false
+  # ⚡ Ruff - 快速静态分析 + 格式化 + import 排序
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.11.10
+    hooks:
+      - id: ruff-format
