@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 import time
 
@@ -39,6 +40,7 @@ def get_stock_data(tickers):
     """使用 yfinance 获取股票的市值和市盈率"""
     print(f"正在获取 {len(tickers)} 支股票的市值和市盈率数据...")
     data = []
+    failed_symbol = []  # 记录失败的股票数
     batch_size = 50  # 分批获取以避免请求过多
     processed_count = 0
     valid_data_count = 0
@@ -54,7 +56,7 @@ def get_stock_data(tickers):
                     info = ticker_obj.info
                     # print(json.dumps(info, indent=2))  # 打印获取到的 info 数据
                     market_cap = info.get("marketCap")
-                    pe_ratio = info.get("forwardPE")  # 使用追踪市盈率
+                    pe_ratio = info.get("trailingPE")  # 使用追踪市盈率
 
                     # 检查数据有效性
                     if (
@@ -71,13 +73,13 @@ def get_stock_data(tickers):
                             }
                         )
                         valid_data_count += 1
-                    # else:
-                    # print(f"跳过 {ticker_symbol}: 市值 ({market_cap}) 或市盈率 ({pe_ratio}) 无效或为负。")
+                    else:
+                        failed_symbol.append(ticker_symbol)
 
                 except Exception:
                     # 处理获取单个 ticker info 可能出现的错误 (例如无效的 ticker)
                     # print(f"获取 {ticker_symbol} 数据时出错: {e}")
-                    pass  # 静默处理获取单个 Ticker 失败的情况
+                    failed_symbol.append(ticker_symbol)
 
             processed_count += len(batch)
             print(
@@ -91,7 +93,9 @@ def get_stock_data(tickers):
             processed_count += len(batch)  # 即使失败也更新计数器
             print(f"已处理 {processed_count}/{len(tickers)}...")
 
-    print(f"成功获取 {len(data)} 支有效股票的数据。")
+    print(
+        f"成功获取 {len(data)} 支有效股票的数据。访问失败数据：{json.dumps(failed_symbol)}"
+    )
     return pd.DataFrame(data)
 
 

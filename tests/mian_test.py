@@ -1,19 +1,10 @@
-import time
+import json
 
-import streamlit as st
+import yfinance as yf
 
-"Starting a long computation..."
+# 获取苹果公司（AAPL）的股票数据
+apple = yf.Ticker("AAPL")
 
-# Add a placeholder
-latest_iteration = st.empty()
-bar = st.progress(0)
+info = apple.info
 
-"hello"
-
-for i in range(100):
-    # Update the progress bar with each iteration.
-    latest_iteration.text(f"Iteration {i + 1}")
-    bar.progress(i + 1)
-    time.sleep(0.1)
-
-"...and now we're done!"
+print(json.dumps(info))

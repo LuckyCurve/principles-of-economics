@@ -1,4 +1,5 @@
 import datetime
+import json
 import os
 import time
 
@@ -42,6 +43,7 @@ def get_stock_data(tickers):
     print(f"正在获取 {len(tickers)} 支股票的市值和市盈率数据...")
     data = []
     batch_size = 50  # 分批获取以避免请求过多
+    failed_symbol = []  # 记录失败的股票数
     processed_count = 0
     valid_data_count = 0
     for i in range(0, len(tickers), batch_size):
@@ -55,7 +57,7 @@ def get_stock_data(tickers):
                     # 尝试访问 .info 属性，如果股票代码无效或数据不可用，可能会抛出异常或返回空字典
                     info = ticker_obj.info
                     market_cap = info.get("marketCap")
-                    pe_ratio = info.get("forwardPE")  # 使用追踪市盈率
+                    pe_ratio = info.get("trailingPE")  # 使用追踪市盈率
 
                     # 检查数据有效性
                     if (
@@ -72,10 +74,13 @@ def get_stock_data(tickers):
                             }
                         )
                         valid_data_count += 1
+                    else:
+                        # 如果市值或市盈率无效，记录失败的股票代码
+                        failed_symbol.append(ticker_symbol)
 
                 except Exception:
                     # 处理获取单个 ticker info 可能出现的错误 (例如无效的 ticker)
-                    pass  # 静默处理获取单个 Ticker 失败的情况
+                    failed_symbol.append(ticker_symbol)
 
             processed_count += len(batch)
             print(
@@ -88,7 +93,9 @@ def get_stock_data(tickers):
             processed_count += len(batch)  # 即使失败也更新计数器
             print(f"已处理 {processed_count}/{len(tickers)}...")
 
-    print(f"成功获取 {len(data)} 支有效股票的数据。")
+    print(
+        f"成功获取 {len(data)} 支有效股票的数据。访问失败数据：{json.dumps(failed_symbol)}"
+    )
     return pd.DataFrame(data)
 
 
