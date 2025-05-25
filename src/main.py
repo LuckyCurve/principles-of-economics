@@ -17,5 +17,5 @@ def get_market_pe_data():
 
 
 if __name__ == "__main__":
-    # get_market_data()
+    get_market_data()
     get_market_pe_data()
